@@ -3,208 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Para ti</title>
+<title>¿Vuelves conmigo?</title>
 <style>
   :root{
-    --negro:#0a090c;
-    --carbon:#141218;
-    --vino:#6d1b2e;
-    --vino-claro:#a8324a;
+    --fondo:#0a090c;
+    --ventana:#1a1720;
+    --barra1:#5c1626;
+    --barra2:#2a0c14;
+    --borde-claro:#4a4350;
+    --borde-oscuro:#08070a;
     --hueso:#e8e2d9;
+    --vino:#a8324a;
     --oro:#c9a227;
   }
   *{box-sizing:border-box}
+  html,body{height:100%}
   body{
-    margin:0; min-height:100vh; display:grid; place-items:center;
+    margin:0; display:grid; place-items:center; padding:20px;
     background:
-      radial-gradient(circle at 50% 0%, rgba(109,27,46,.38), transparent 60%),
-      radial-gradient(circle at 15% 100%, rgba(60,20,40,.45), transparent 55%),
-      var(--negro);
+      radial-gradient(circle at 50% 0%, rgba(109,27,46,.35), transparent 60%),
+      radial-gradient(circle at 20% 100%, rgba(60,20,40,.4), transparent 55%),
+      var(--fondo);
+    font-family: 'Courier New', Courier, monospace;
     color:var(--hueso);
-    font-family: Georgia, 'Times New Roman', serif;
-    padding:28px 20px;
-    overflow-x:hidden;
+    overflow:hidden;
   }
   .petalo{
-    position:fixed; top:-40px; color:var(--vino-claro); opacity:.32;
-    font-size:18px; animation:caer linear infinite; pointer-events:none;
+    position:fixed; top:-40px; color:var(--vino); opacity:.3;
+    font-size:16px; animation:caer linear infinite; pointer-events:none; z-index:0;
   }
   @keyframes caer{ to{ transform:translateY(110vh) rotate(360deg); } }
 
-  .carta{
+  /* ---- ventana estilo 95 ---- */
+  .ventana{
     position:relative; z-index:2;
-    max-width:540px; width:100%;
-    text-align:center;
-    padding:52px 34px 44px;
-    background:linear-gradient(180deg, rgba(20,18,24,.93), rgba(10,9,12,.97));
-    border:1px solid rgba(201,162,39,.32);
-    border-radius:3px;
-    box-shadow:0 0 70px rgba(109,27,46,.35), inset 0 0 50px rgba(0,0,0,.65);
+    width:100%; max-width:480px;
+    background:var(--ventana);
+    border:2px solid;
+    border-color:var(--borde-claro) var(--borde-oscuro) var(--borde-oscuro) var(--borde-claro);
+    box-shadow:0 0 60px rgba(109,27,46,.45), 6px 6px 0 rgba(0,0,0,.6);
+    padding:3px;
   }
-  .carta::before, .carta::after{
-    content:""; position:absolute; width:28px; height:28px;
-    border:1px solid rgba(201,162,39,.5);
+  .barra{
+    display:flex; align-items:center; justify-content:space-between;
+    background:linear-gradient(90deg, var(--barra1), var(--barra2));
+    padding:4px 6px; font-size:13px; letter-spacing:.06em;
+    color:#f0e9e0; font-weight:bold;
   }
-  .carta::before{ top:11px; left:11px; border-right:none; border-bottom:none; }
-  .carta::after{ bottom:11px; right:11px; border-left:none; border-top:none; }
+  .barra .icono{ margin-right:6px; color:var(--oro); }
+  .controles{ display:flex; gap:3px; }
+  .ctrl{
+    width:18px; height:16px; display:grid; place-items:center;
+    background:var(--ventana); color:var(--hueso); font-size:10px;
+    border:1px solid;
+    border-color:var(--borde-claro) var(--borde-oscuro) var(--borde-oscuro) var(--borde-claro);
+  }
+  .cuerpo{ padding:26px 22px 22px; }
 
-  .cruz{ font-size:20px; color:var(--oro); letter-spacing:.5em; margin-bottom:22px; }
-  h1{
-    font-size:clamp(27px, 6.5vw, 40px);
-    font-weight:normal; letter-spacing:.05em;
-    margin:0 0 10px; color:var(--hueso);
-    text-shadow:0 0 26px rgba(168,50,74,.65);
-  }
-  .sub{
-    font-style:italic; color:#b3aaa0; font-size:14.5px;
-    letter-spacing:.09em; margin-bottom:30px;
-  }
-  .linea{
-    width:90px; height:1px; margin:0 auto 34px;
-    background:linear-gradient(90deg, transparent, var(--oro), transparent);
-  }
-  p.texto{
-    font-size:16.5px; line-height:1.9; color:#d6cfc5;
-    margin:0 0 20px; text-align:left;
-  }
-  p.texto:first-letter{
-    font-size:44px; float:left; line-height:.85;
-    padding:5px 10px 0 0; color:var(--vino-claro);
-  }
-  .firma{
-    text-align:right; font-style:italic; color:#a89f94;
-    font-size:15px; margin-top:28px; letter-spacing:.04em;
-  }
-
-  .botones{ display:flex; flex-direction:column; gap:14px; margin-top:38px; }
-  button{
-    font-family:inherit; font-size:15px; letter-spacing:.12em;
-    text-transform:uppercase; padding:17px 20px;
-    background:transparent; color:var(--hueso);
-    border:1px solid rgba(201,162,39,.42);
-    border-radius:2px; cursor:pointer;
-    transition:all .35s ease;
-  }
-  button:hover{
-    background:var(--vino); border-color:var(--vino-claro);
-    box-shadow:0 0 30px rgba(168,50,74,.55);
-    transform:translateY(-2px);
-  }
-  button.principal{
-    background:linear-gradient(180deg, var(--vino), #480f1e);
-    border-color:var(--vino-claro);
-  }
-  button.principal:hover{ filter:brightness(1.3); }
-
-  dialog{
-    border:1px solid rgba(201,162,39,.42);
-    border-radius:3px;
-    background:linear-gradient(180deg,#141218,#0a090c);
+  .simbolo{ text-align:center; font-size:26px; color:var(--vino); letter-spacing:.4em; margin-bottom:18px; }
+  .pregunta{
+    font-family: Georgia, serif;
+    font-size:clamp(20px, 5.5vw, 27px);
+    line-height:1.5; text-align:center;
+    margin:0 0 10px; min-height:2.6em;
     color:var(--hueso);
-    padding:40px 28px 32px;
-    max-width:420px; width:calc(100% - 32px);
-    box-shadow:0 0 90px rgba(109,27,46,.6);
-    font-family:inherit; text-align:center;
+    text-shadow:0 0 20px rgba(168,50,74,.5);
   }
-  dialog::backdrop{ background:rgba(4,3,6,.85); backdrop-filter:blur(3px); }
-  dialog h2{
-    font-weight:normal; font-size:23px; letter-spacing:.04em;
-    margin:0 0 18px; color:var(--hueso);
+  .cursor{
+    display:inline-block; width:9px; height:1.05em;
+    background:var(--vino); vertical-align:-3px; margin-left:2px;
+    animation:parpadear 1s steps(1) infinite;
   }
-  dialog p{ line-height:1.85; color:#cdc5ba; font-size:16px; margin:0 0 26px; }
-  dialog .simbolo{ font-size:26px; color:var(--vino-claro); margin-bottom:16px; }
-  dialog button{ width:100%; }
+  @keyframes parpadear{ 50%{ opacity:0; } }
+  .nota{
+    text-align:center; font-size:12px; color:#8f8794;
+    letter-spacing:.08em; margin:0 0 26px; min-height:1.2em;
+  }
 
+  .botones{ display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
+  button{
+    font-family:'Courier New', monospace; font-size:14px; font-weight:bold;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:13px 22px; cursor:pointer; color:var(--hueso);
+    background:var(--ventana);
+    border:2px solid;
+    border-color:var(--borde-claro) var(--borde-oscuro) var(--borde-oscuro) var(--borde-claro);
+    transition:transform .18s ease, background .2s ease;
+  }
+  button:active{ border-color:var(--borde-oscuro) var(--borde-claro) var(--borde-claro) var(--borde-oscuro); }
+  #btnSi{
+    background:linear-gradient(180deg, var(--barra1), #400f1c);
+    border-color:var(--vino) var(--borde-oscuro) var(--borde-oscuro) var(--vino);
+    box-shadow:0 0 22px rgba(168,50,74,.5);
+  }
+  #btnSi:hover{ filter:brightness(1.3); transform:translateY(-2px); }
   #btnNo{ position:relative; }
+
+  /* ventana final */
+  .final{
+    position:fixed; inset:0; z-index:5;
+    display:none; place-items:center; padding:20px;
+    background:rgba(4,3,6,.88); backdrop-filter:blur(4px);
+  }
+  .final.activo{ display:grid; }
+  .final .ventana{ max-width:420px; }
+  .final p{
+    font-family:Georgia, serif; font-size:17px; line-height:1.85;
+    text-align:center; color:#d6cfc5; margin:0 0 24px;
+  }
+  .final h2{
+    font-family:Georgia, serif; font-weight:normal; font-size:23px;
+    text-align:center; margin:0 0 16px; color:var(--hueso);
+  }
 </style>
 </head>
 <body>
 
-<div class="carta">
-  <div class="cruz">✦ ✝ ✦</div>
-  <h1>Vuelve conmigo</h1>
-  <div class="sub">lo que no supe decirte mirándote a los ojos</div>
-  <div class="linea"></div>
+<div class="ventana">
+  <div class="barra">
+    <span><span class="icono">✦</span>propuesta.exe</span>
+    <span class="controles"><span class="ctrl">_</span><span class="ctrl">□</span><span class="ctrl">✕</span></span>
+  </div>
+  <div class="cuerpo">
+    <div class="simbolo">✝ ✦ ✝</div>
+    <p class="pregunta"><span id="texto"></span><span class="cursor"></span></p>
+    <p class="nota" id="nota"></p>
 
-  <p class="texto">
-    Hay una versión de mí que todavía se despierta pensando en ti.
-    No la elegí, simplemente pasa: abro los ojos y ahí estás,
-    como una canción que se queda pegada y no molesta.
-  </p>
-  <p class="texto">
-    No te escribo para borrar lo que pasó. Lo que pasó nos enseñó
-    cosas que ninguno de los dos sabía antes. Te escribo porque,
-    después de todo, sigo eligiéndote.
-  </p>
-  <p class="texto">
-    No te pido que olvides, ni que finjas que no dolió.
-    Te pido otra oportunidad, de esas que se dan con miedo
-    y con ganas al mismo tiempo.
-  </p>
-
-  <div class="firma">— tuya, todavía</div>
-
-  <div class="botones">
-    <button class="principal" onclick="document.getElementById('aceptar').showModal()">
-      Sí, quiero intentarlo otra vez
-    </button>
-    <button onclick="document.getElementById('pensar').showModal()">
-      Necesito pensarlo
-    </button>
-    <button id="btnNo" onclick="document.getElementById('no').showModal()">
-      No
-    </button>
+    <div class="botones">
+      <button id="btnSi">Sí, acepto</button>
+      <button id="btnNo">No</button>
+    </div>
   </div>
 </div>
 
-<dialog id="aceptar">
-  <div class="simbolo">🖤</div>
-  <h2>Me acabas de devolver el aire</h2>
-  <p>
-    No sé exactamente a dónde vamos, pero sé con quién quiero ir.
-    Gracias por leer hasta aquí. Te espero.
-  </p>
-  <button onclick="document.getElementById('aceptar').close()">Cerrar</button>
-</dialog>
-
-<dialog id="pensar">
-  <div class="simbolo">✦</div>
-  <h2>Tómate tu tiempo</h2>
-  <p>
-    No quiero una respuesta rápida, quiero una respuesta tuya.
-    Cuando estés listo, aquí voy a estar.
-  </p>
-  <button onclick="document.getElementById('pensar').close()">Cerrar</button>
-</dialog>
-
-<dialog id="no">
-  <div class="simbolo">✝</div>
-  <h2>Aun así, gracias</h2>
-  <p>
-    Entiendo. Me quedo con lo bueno y te deseo algo bonito,
-    de verdad.
-  </p>
-  <button onclick="document.getElementById('no').close()">Cerrar</button>
-</dialog>
+<div class="final" id="final">
+  <div class="ventana">
+    <div class="barra">
+      <span><span class="icono">🖤</span>respuesta_guardada.exe</span>
+      <span class="controles"><span class="ctrl">✕</span></span>
+    </div>
+    <div class="cuerpo">
+      <h2>Sabía que dirías que sí</h2>
+      <p>No sé a dónde vamos, pero sé con quién quiero ir.<br>Gracias por no rendirte con el botón.</p>
+      <button onclick="document.getElementById('final').classList.remove('activo')" style="width:100%">Cerrar</button>
+    </div>
+  </div>
+</div>
 
 <script>
+  /* pétalos */
   const simbolos = ['✦','❦','✧','·'];
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 16; i++) {
     const p = document.createElement('div');
     p.className = 'petalo';
     p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
     p.style.left = Math.random() * 100 + 'vw';
-    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDuration = (9 + Math.random() * 10) + 's';
     p.style.animationDelay = (-Math.random() * 12) + 's';
-    p.style.fontSize = (12 + Math.random() * 16) + 'px';
+    p.style.fontSize = (11 + Math.random() * 14) + 'px';
     document.body.appendChild(p);
   }
 
+  /* texto que se escribe solo */
+  const frase = '¿Vuelves conmigo?';
+  const destino = document.getElementById('texto');
+  let i = 0;
+  function escribir(){
+    if (i < frase.length){
+      destino.textContent += frase[i];
+      i++;
+      setTimeout(escribir, 110);
+    }
+  }
+  setTimeout(escribir, 600);
+
+  /* el botón "No" que no deja decir que no */
   const btnNo = document.getElementById('btnNo');
-  btnNo.addEventListener('mouseenter', () => {
-    btnNo.style.transform = `translate(${(Math.random()-0.5)*60}px, ${(Math.random()-0.5)*20}px)`;
+  const nota = document.getElementById('nota');
+  const frases = [
+    '¿Seguro?',
+    'Piénsalo otra vez…',
+    'No es tan fácil.',
+    'Ese botón está roto.',
+    'Intenta con el otro.',
+    'En serio, no funciona.',
+    'El destino no te deja.',
+    'Ya ríndete, di que sí.',
+    'Este botón no existe.'
+  ];
+  const textosNo = ['No','¿No?','No…','Casi','Nop','Nope','No puedo','Ayuda'];
+  let intentos = 0;
+
+  function escapar(){
+    intentos++;
+    const x = (Math.random() - 0.5) * 180;
+    const y = (Math.random() - 0.5) * 90;
+    btnNo.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(0.45, 1 - intentos * 0.07)})`;
+    btnNo.textContent = textosNo[Math.min(intentos, textosNo.length - 1)];
+    nota.textContent = frases[Math.min(intentos - 1, frases.length - 1)];
+  }
+
+  btnNo.addEventListener('mouseenter', escapar);
+  btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); escapar(); }, {passive:false});
+  btnNo.addEventListener('click', (e) => { e.preventDefault(); escapar(); });
+
+  /* aceptar */
+  document.getElementById('btnSi').addEventListener('click', () => {
+    document.getElementById('final').classList.add('activo');
   });
-  btnNo.addEventListener('click', () => { btnNo.style.transform = 'none'; });
 </script>
 </body>
 </html>
